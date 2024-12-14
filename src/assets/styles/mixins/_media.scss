@@ -1,0 +1,20 @@
+@use "../variables/_breakpoints" as breakpoints;
+
+// 375
+@mixin sm {
+  @media all and (min-width: breakpoints.$sm) {
+    @content;
+  }
+}
+// 768
+@mixin md {
+  @media all and (min-width: breakpoints.$md) {
+    @content;
+  }
+}
+// 1440
+@mixin lg {
+  @media all and (min-width: breakpoints.$lg) {
+    @content;
+  }
+}

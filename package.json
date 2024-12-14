@@ -1,0 +1,30 @@
+{
+  "name": "cw.csr.river.achievement",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "deploy:test": "ssh root@www.meproz.com 'rm -rf /var/www/new-taipei && mkdir /var/www/new-taipei' && scp -r dist/* root@www.meproz.com:/var/www/new-taipei",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/noto-sans-tc": "^5.1.0",
+    "@fontsource/noto-serif-tc": "^5.1.1",
+    "gsap": "^3.12.2",
+    "pinia": "^2.3.0",
+    "vue": "^3.5.12",
+    "vue-router": "^4.2.5",
+    "vue3-marquee": "^4.2.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "sass": "^1.83.0",
+    "tailwindcss": "^3.4.16",
+    "vite": "^5.4.9",
+    "vite-plugin-svg-icons": "^2.0.1"
+  }
+}
