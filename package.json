@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy:test": "ssh root@www.meproz.com 'rm -rf /var/www/new-taipei && mkdir /var/www/new-taipei' && scp -r dist/* root@www.meproz.com:/var/www/new-taipei",
+    "build:dev": "vite build --mode development",
+    "build:test": "vite build --mode test",
+    "deploy:dev": "ssh root@www.meproz.com 'rm -rf /var/www/new-taipei && mkdir /var/www/new-taipei' && scp -r dist/* root@www.meproz.com:/var/www/new-taipei",
+    "deploy:meproz": "ssh root@www.meproz.com 'rm -rf /var/www/kelly/_test-by-cwlab/2024newtaipeiriver && mkdir -p /var/www/kelly/_test-by-cwlab/2024newtaipeiriver' && scp -r dist/* root@www.meproz.com:/var/www/kelly/_test-by-cwlab/2024newtaipeiriver",
     "preview": "vite preview"
   },
   "dependencies": {
