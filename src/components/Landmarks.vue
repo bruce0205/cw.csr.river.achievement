@@ -191,6 +191,6 @@ const onDrag = (e) => {
   }
 }
 .landmark {
-  @apply bg-[#BDE1EF4D] text-[#2F3941] text-[15px] font-sans tracking-[.08em] w-fit px-4 py-2 rounded-[40px] cursor-pointer select-none;
+  @apply bg-[#BDE1EF4D] text-[#2F3941] text-[15px] font-sans tracking-[.08em] w-fit px-4 py-2 rounded-[40px] cursor-pointer select-none flex items-center;
 }
 </style>
