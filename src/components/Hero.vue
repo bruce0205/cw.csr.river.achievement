@@ -44,6 +44,7 @@ onMounted(async () => {
       preload="auto"
       src="https://event.cw.com.tw/2024newtaipeiriver/kvbackground.mp4"
     ></video>
+    <!-- src="https://storage.googleapis.com/web-csr-cw-com-tw/2023river/pixs/hero/0921herofinal2.mp4" -->
     <div
       class="absolute lg:top-[204px] md:top-[384px] top-[278px] debug-border-red lg:w-[400px] md:w-[312px] w-[250px] flex flex-col items-center"
     >

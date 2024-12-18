@@ -3,11 +3,11 @@ import { ref, watch } from "vue";
 import useResponsive from "@/composables/useResponsive";
 import ActionCard from "./ActionCard.vue";
 import SvgIcon from "@/components/SvgIcon.vue";
-const { isLarge, isMedium, isSmall, screenType } = useResponsive();
+const { isLarge, isMedium, screenType } = useResponsive();
 const currentIndex = ref(0);
 
 const filterMapData = [];
-for (let i = 1; i <= 1; i++) {
+for (let i = 1; i <= 6; i++) {
   filterMapData.push({
     id: 100,
     org_short: "組織企業",

@@ -4,7 +4,7 @@ import Introduction from "@/components/Introduction.vue";
 import Achievement from "@/components/Achievement.vue";
 import Map from "@/components/Map.vue";
 import BeautyGallery from "@/components/BeautyGallery.vue";
-import Education from "@/components/Education.vue";
+import Educations from "@/components/Educations.vue";
 import Footer from "@/components/Footer.vue";
 import CookieBar from "@/components/CookieBar.vue";
 </script>
@@ -28,7 +28,7 @@ import CookieBar from "@/components/CookieBar.vue";
     </div>
 
     <!-- 6) 教育資源 -->
-    <Education></Education>
+    <Educations></Educations>
   </div>
   <Footer></Footer>
   <CookieBar />

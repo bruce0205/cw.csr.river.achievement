@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:production": "vite build",
     "build:dev": "vite build --mode development",
     "build:test": "vite build --mode test",
     "deploy:dev": "ssh root@www.meproz.com 'rm -rf /var/www/new-taipei && mkdir /var/www/new-taipei' && scp -r dist/* root@www.meproz.com:/var/www/new-taipei",
