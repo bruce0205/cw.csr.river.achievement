@@ -7,7 +7,7 @@ const { isLarge, isMedium, isSmall, screenType } = useResponsive();
 const currentIndex = ref(0);
 
 const filterMapData = [];
-for (let i = 1; i <= 6; i++) {
+for (let i = 1; i <= 1; i++) {
   filterMapData.push({
     id: 100,
     org_short: "組織企業",

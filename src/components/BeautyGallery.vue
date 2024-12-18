@@ -36,46 +36,46 @@ const currentScrollConfig = computed(
 
 const scrollAnimation = ref(null);
 onMounted(async () => {
-  await getData();
-  setTimeout(() => {
-    scrollAnimation.value = gsap.to(".scroll-box", {
-      x() {
-        const container = document.querySelector("#h-scroll-container");
-        return `${-(
-          container.scrollWidth -
-          container.clientWidth +
-          currentScrollConfig.value.additionX
-        )}px`;
-      },
-      ease: "none",
-      scrollTrigger: {
-        // markers: true,
-        trigger: ".scroll-container",
-        start: () => currentScrollConfig.value.start,
-        scrub: true,
-        pin: ".scroll-container",
-        invalidateOnRefresh: true,
-      },
-    });
+  getData();
+  // setTimeout(() => {
+  scrollAnimation.value = gsap.to(".scroll-box", {
+    x() {
+      const container = document.querySelector("#h-scroll-container");
+      return `${-(
+        container.scrollWidth -
+        container.clientWidth +
+        currentScrollConfig.value.additionX
+      )}px`;
+    },
+    ease: "none",
+    scrollTrigger: {
+      // markers: true,
+      trigger: ".scroll-container",
+      start: () => currentScrollConfig.value.start,
+      scrub: true,
+      pin: ".scroll-container",
+      invalidateOnRefresh: true,
+    },
+  });
 
-    ScrollTrigger.refresh();
+  ScrollTrigger.refresh();
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".collage-1",
-        start: "left center",
-        scrub: true,
-        once: true,
-      },
-      defaults: { ease: "none" },
-    });
-    tl.from(".collage-1 .text-en", { opacity: 0 })
-      .from(".collage-1 .left .text-ch", { opacity: 0 })
-      .from(".collage-1 .right-bottom .text-ch", { opacity: 0 })
-      .from(".collage-2 .left .text-en", { opacity: 0 })
-      .from(".collage-2 .left .text-ch", { opacity: 0 })
-      .from(".collage-2 .right-top .text-ch", { opacity: 0 });
-  }, 100);
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".collage-1",
+      start: "left center",
+      scrub: true,
+      once: true,
+    },
+    defaults: { ease: "none" },
+  });
+  tl.from(".collage-1 .text-en", { opacity: 0 })
+    .from(".collage-1 .left .text-ch", { opacity: 0 })
+    .from(".collage-1 .right-bottom .text-ch", { opacity: 0 })
+    .from(".collage-2 .left .text-en", { opacity: 0 })
+    .from(".collage-2 .left .text-ch", { opacity: 0 })
+    .from(".collage-2 .right-top .text-ch", { opacity: 0 });
+  // }, 100);
 });
 
 onBeforeUnmount(() => {

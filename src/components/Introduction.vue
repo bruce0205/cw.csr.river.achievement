@@ -11,11 +11,11 @@
     >
       <div class="flex flex-col items-center">
         <div class="logo">
-          <img src="@/assets/declaration.svg" />
+          <img src="@/assets/metrics.svg" />
         </div>
-        <div class="subtitle">2050永續宣言</div>
+        <div class="subtitle">永續淨零關鍵數據</div>
         <div class="description">
-          承諾2050年達成全市淨零碳排放目標，推動四大策略：能源轉型、智慧運輸、循環經濟和城市韌性調適​。將於八里區建設淨零碳示範區，涵蓋能源結構轉型、交通電動化、環保設施建設，成為淨零碳排目標的先行示範​。
+          新北市環境改善成效顯著：淡水河水質大幅提升，污水接管覆蓋率達72.41%，重污染區由21.4%降至1.7%。空氣品質優化，PM2.5濃度降至10.5μg/m³。此外，市民回收率達63.56%，並設立超過50個無塑市集與100家環保商店，全力推動永續發展。
         </div>
       </div>
       <div class="flex flex-col items-center">
@@ -29,11 +29,11 @@
       </div>
       <div class="flex flex-col items-center">
         <div class="logo">
-          <img src="@/assets/metrics.svg" />
+          <img src="@/assets/declaration.svg" />
         </div>
-        <div class="subtitle">永續淨零關鍵數據</div>
+        <div class="subtitle">2050永續宣言</div>
         <div class="description">
-          新北市環境改善成效顯著：淡水河水質大幅提升，污水接管覆蓋率達72.41%，重污染區由21.4%降至1.7%。空氣品質優化，PM2.5濃度降至10.5μg/m³。此外，市民回收率達63.56%，並設立超過50個無塑市集與100家環保商店，全力推動永續發展。
+          承諾2050年達成全市淨零碳排放目標，推動四大策略：能源轉型、智慧運輸、循環經濟和城市韌性調適​。將於八里區建設淨零碳示範區，涵蓋能源結構轉型、交通電動化、環保設施建設，成為淨零碳排目標的先行示範​。
         </div>
       </div>
     </div>
