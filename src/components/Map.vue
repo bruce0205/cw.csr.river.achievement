@@ -57,10 +57,9 @@ onUpdated(() => {
     <div class="lg:w-[1440px] md:w-[768px] w-[390px]">
       <!-- 4-1> project selection -->
       <div class="relative project-container z-20">
-        <div class="project-badge active">生態復育專案</div>
-        <div class="project-badge">五溝一堤整治計畫</div>
-        <div class="project-badge">污水接管工程</div>
-        <div class="project-badge">河川巡守隊計畫</div>
+        <div class="project-badge active">五溝一堰計畫</div>
+        <div class="project-badge">水環境巡守隊</div>
+        <div class="project-badge">淨海合作社</div>
       </div>
 
       <div class="relative mt-2 lg:h-[725px] md:h-[915px] h-[740px] w-full">
