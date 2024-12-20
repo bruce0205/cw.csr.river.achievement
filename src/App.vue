@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { useAppStore } from "@/stores/appStore";
-import { fetchHeading } from "@/api/sheetApi";
+import { useMapStore } from "@/stores/mapStore";
 import Hero from "@/components/Hero.vue";
 import Introduction from "@/components/Introduction.vue";
 import Achievement from "@/components/Achievement.vue";
@@ -11,12 +11,11 @@ import Educations from "@/components/Educations.vue";
 import Footer from "@/components/Footer.vue";
 import CookieBar from "@/components/CookieBar.vue";
 const appStore = useAppStore();
+const mapStore = useMapStore();
 
 onMounted(async () => {
-  // call api, then set store
-  const response = await fetchHeading();
-  console.log("response", response);
-  appStore.setHeadings(response);
+  appStore.setHeadings();
+  mapStore.initMap();
 });
 </script>
 

@@ -109,7 +109,7 @@ export const fetchAchievement = async () => {
 };
 
 export const fetchHeading = async () => {
-  const range = "heading!A3:D5";
+  const range = "heading!A3:D6";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
   try {
     const response = await fetch(url);
@@ -143,9 +143,55 @@ export const fetchMapProject = async () => {
         return {
           projectNo: item[0],
           projectName: item[1],
+          iconUrl: item[2],
+          description: item[3],
+          mapUrl: item[4],
+          actions: item[5],
+        };
+      });
+    }
+    throw data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchMapDistrict = async () => {
+  const range = "map-district!A3:C52";
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (response.ok) {
+      return data.values.map((item) => {
+        return {
+          projectNo: item[0],
+          districtNo: item[1],
           description: item[2],
-          mapUrl: item[3],
-          actions: item[4],
+        };
+      });
+    }
+    throw data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchLandmark = async () => {
+  const range = "map-landmark!B3:E102";
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (response.ok) {
+      return data.values.map((item) => {
+        return {
+          projectNo: item[0],
+          districtNo: item[1],
+          landmarkName: item[2],
+          landmarkUrl: item[3],
         };
       });
     }

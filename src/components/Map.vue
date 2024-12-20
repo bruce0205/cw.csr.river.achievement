@@ -1,9 +1,17 @@
 <script setup>
 import { computed, onUpdated, ref } from "vue";
 import useResponsive from "@/composables/useResponsive";
+import { useMapStore } from "@/stores/mapStore";
+import { useAppStore } from "@/stores/appStore";
+import { storeToRefs } from "pinia";
 import useMaps from "@/composables/useMaps";
 import Actions from "./Actions.vue";
 import Landmarks from "./Landmarks.vue";
+
+const appStore = useAppStore();
+const mapStore = useMapStore();
+const { mapHeading } = storeToRefs(appStore);
+const { projectList, selectedProject } = storeToRefs(mapStore);
 const { isLarge, isMedium } = useResponsive();
 const [anchorMapLg, anchorMapMd, anchorMapSm] = useMaps([
   "anchor-map-lg",
@@ -44,6 +52,12 @@ function animateAnchor() {
   });
 }
 
+function openProjectMap(url) {
+  if (!!url) {
+    window.open(url, "_blank");
+  }
+}
+
 onUpdated(() => {
   setTimeout(() => {
     // requestAnimationFrame(animate);
@@ -57,9 +71,17 @@ onUpdated(() => {
     <div class="lg:w-[1440px] md:w-[768px] w-[390px]">
       <!-- 4-1> project selection -->
       <div class="relative project-container z-20">
-        <div class="project-badge active">五溝一堰計畫</div>
-        <div class="project-badge">水環境巡守隊</div>
-        <div class="project-badge">淨海合作社</div>
+        <div
+          v-for="(project, index) in projectList"
+          :key="index"
+          :class="[
+            'project-badge',
+            selectedProject?.projectNo === project.projectNo ? 'active' : '',
+          ]"
+          @click="() => mapStore.selectProject(project.projectNo)"
+        >
+          {{ project.projectName }}
+        </div>
       </div>
 
       <div class="relative mt-2 lg:h-[725px] md:h-[915px] h-[740px] w-full">
@@ -73,12 +95,12 @@ onUpdated(() => {
           <div
             class="font-semibold font-serif text-[#2F3941] lg:text-[50px] md:text-[40px] text-[36px]"
           >
-            新北市
+            {{ mapHeading?.title }}
           </div>
           <div
             class="mt-1 font-semibold font-serif text-[#2F3941] lg:text-sm text-xs"
           >
-            New Taipei City
+            {{ mapHeading?.subtitle }}
           </div>
         </div>
 
@@ -90,15 +112,21 @@ onUpdated(() => {
             v-if="isMedium"
             class="lg:w-[130px] md:w-[108px] md:flex justify-center items-center"
           >
-            <img src="@/assets/ball.svg" />
+            <img :src="selectedProject?.iconUrl" />
           </div>
           <div
             class="lg:ml-5 md:ml-[18px] ml-[33px] flex flex-col justify-center"
           >
             <div class="description">
-              新北市政府推動「五溝一堰」計畫，全面整治湳仔溝、瓦磘溝、鴨母港溝、藤寮坑溝、大窠坑溪和碧潭堰，旨在解決水污染，恢復生態，提升生活品質。
+              {{ selectedProject?.description }}
             </div>
-            <div class="click-map">點擊看地圖 ➜</div>
+            <div
+              v-if="!!selectedProject?.mapUrl"
+              class="click-map"
+              @click="openProjectMap(selectedProject?.mapUrl)"
+            >
+              點擊看地圖 ➜
+            </div>
           </div>
         </div>
 

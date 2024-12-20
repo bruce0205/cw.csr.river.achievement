@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { fetchHeading } from "@/api/sheetApi";
 
 export const useAppStore = defineStore("appStore", {
   state: () => ({
@@ -16,10 +17,14 @@ export const useAppStore = defineStore("appStore", {
     educationHeading: (state) => {
       return state.headings?.find((heading) => heading.section === "education");
     },
+    mapHeading: (state) => {
+      return state.headings?.find((heading) => heading.section === "map");
+    },
   },
   actions: {
-    setHeadings(headings) {
-      this.headings = headings;
+    async setHeadings() {
+      const response = await fetchHeading();
+      this.headings = response;
     },
   },
 });

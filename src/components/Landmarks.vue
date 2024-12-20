@@ -1,65 +1,27 @@
 <script setup>
-import { ref, computed, watchEffect, onMounted, onUpdated, watch } from "vue";
+import { ref, watch } from "vue";
 import useResponsive from "@/composables/useResponsive";
-const { isLarge, isMedium, screenType } = useResponsive();
-// const currentIndex = ref(0);
+import { useMapStore } from "@/stores/mapStore";
+import { storeToRefs } from "pinia";
+
+const mapStore = useMapStore();
+const { selectedLandmarkList, selectedProject } = storeToRefs(mapStore);
+const { isLarge } = useResponsive();
 
 const isDragging = ref(false);
 const startX = ref(0);
 const scrollLeft = ref(0);
 const landmarkContainer = ref(null);
-const landmarks = ref([
-  {
-    id: 1,
-    name: "伊莉莎海灘咖啡館",
-    url: "https://maps.app.goo.gl/31QfwLpv3SwkhXYN8",
-  },
-  {
-    id: 2,
-    name: "豬爸爸石花凍",
-    url: "https://maps.app.goo.gl/Qw5Sq6ZwjKhm5Yci7",
-  },
-  {
-    id: 3,
-    name: "豬小妹石花凍燒烤飲品",
-    url: "https://maps.app.goo.gl/iQ912kRo7hEJ86dGA",
-  },
-  {
-    id: 4,
-    name: "白沙灣哈那海邊咖啡屋",
-    url: "https://maps.app.goo.gl/nrVHuNepfdYJn6vq9",
-  },
-  {
-    id: 5,
-    name: "黑皮小吃",
-    url: "https://maps.app.goo.gl/B1ydZdBnRFwoiuHV7",
-  },
-  {
-    id: 6,
-    name: "山海芳園景觀咖啡廳",
-    url: "https://maps.app.goo.gl/CQjY8ga3RcVzqPxX9",
-  },
-  {
-    id: 7,
-    name: "靖瑜平價海鮮",
-  },
-  {
-    id: 8,
-    name: "福泰翡翠灣渡假飯店",
-  },
-  {
-    id: 9,
-    name: "馬納蒂 Manatee Diner",
-  },
-  {
-    id: 10,
-    name: "卯澳小吃",
-  },
-  {
-    id: 11,
-    name: "龍洞鼻頭角潛水店",
-  },
-]);
+
+watch(
+  () => selectedProject.value?.projectNo,
+  (newValue) => {
+    landmarkContainer.value.scrollTo({
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+);
 
 const moveNextCard = () => {
   const cards = [...landmarkContainer.value.children];
@@ -112,8 +74,8 @@ const movePreviousCard = () => {
 };
 
 const clickLandmark = (data) => {
-  if (data?.url) {
-    window.open(data.url, "_blank");
+  if (data?.landmarkUrl) {
+    window.open(data.landmarkUrl, "_blank");
   }
 };
 
@@ -172,12 +134,12 @@ const onDrag = (e) => {
         @mousemove="onDrag"
       >
         <div
-          v-for="(data, index) in landmarks"
+          v-for="(data, index) in selectedLandmarkList"
           class="landmark"
           :key="index"
           @click="clickLandmark(data)"
         >
-          {{ data.name }}
+          {{ data.landmarkName }}
         </div>
       </div>
     </div>
