@@ -1,23 +1,22 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
+import { useAppStore } from "@/stores/appStore";
+import { storeToRefs } from "pinia";
 import useResponsive from "@/composables/useResponsive";
 import EducationCard from "./EducationCard.vue";
 import SvgIcon from "@/components/SvgIcon.vue";
-const { isLarge, isMedium, screenType } = useResponsive();
-const currentIndex = ref(0);
-const topic = ref("“ 倡議平台全面升級，從流域減污到生態共好 ”");
+import { fetchEducation } from "@/api/sheetApi";
 
-const filterMapData = [];
-for (let i = 1; i <= 6; i++) {
-  filterMapData.push({
-    id: i,
-    name: i % 2 === 0 ? "Resources" : "Actions",
-    icon: i % 2 === 0 ? "resource" : "action",
-    title: i % 2 === 0 ? i + ".教育資源" : i + ".永續行動呼籲",
-    description:
-      "除透過公開發表支持喚起大眾的意識，讓更多人意識到保護淡水河與環境的重要性水河與環境外。",
-  });
-}
+const appStore = useAppStore();
+const { educationHeading } = storeToRefs(appStore);
+const educationData = ref([]);
+const { isMedium, screenType } = useResponsive();
+const currentIndex = ref(0);
+
+onMounted(async () => {
+  const data = await fetchEducation();
+  educationData.value = data;
+});
 
 watch(
   () => screenType,
@@ -58,14 +57,15 @@ async function goToLink(url) {}
 
 function showNavigator() {
   const baseCount = isMedium ? 2 : 1;
-  return filterMapData.length > baseCount;
+  return educationData.value.length > baseCount;
 }
 </script>
+
 <template>
   <div
     class="lg:pb-[120px] md:pb-[100px] pb-20 lg:w-[790px] md:w-[660px] w-[320px] flex flex-col items-center"
   >
-    <div class="topic">{{ topic }}</div>
+    <div class="topic">{{ educationHeading?.title }}</div>
     <div class="educations lg:mt-[60px] md:mt-[40px] mt-[30px]">
       <div
         id="educations__body"
@@ -73,7 +73,7 @@ function showNavigator() {
         @scroll="(info) => moveCard(info, '.educations__body')"
       >
         <EducationCard
-          v-for="(data, index) in filterMapData"
+          v-for="(data, index) in educationData"
           :key="index"
           :data="data"
           @click="() => goToLink(data.url)"
@@ -94,6 +94,7 @@ function showNavigator() {
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 @use "@/assets/styles/mixins/_media" as media;
 .topic {

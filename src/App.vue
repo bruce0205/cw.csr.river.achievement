@@ -1,4 +1,7 @@
 <script setup>
+import { onMounted } from "vue";
+import { useAppStore } from "@/stores/appStore";
+import { fetchHeading } from "@/api/sheetApi";
 import Hero from "@/components/Hero.vue";
 import Introduction from "@/components/Introduction.vue";
 import Achievement from "@/components/Achievement.vue";
@@ -7,6 +10,14 @@ import BeautyGallery from "@/components/BeautyGallery.vue";
 import Educations from "@/components/Educations.vue";
 import Footer from "@/components/Footer.vue";
 import CookieBar from "@/components/CookieBar.vue";
+const appStore = useAppStore();
+
+onMounted(async () => {
+  // call api, then set store
+  const response = await fetchHeading();
+  console.log("response", response);
+  appStore.setHeadings(response);
+});
 </script>
 
 <template>

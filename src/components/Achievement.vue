@@ -1,6 +1,19 @@
 <script setup>
+import { ref, onMounted } from "vue";
+import { fetchAchievement } from "@/api/sheetApi";
 import useResponsive from "@/composables/useResponsive";
 const { isLarge } = useResponsive();
+
+const achievementData = ref([
+  ...Array(5).fill({
+    loading: true,
+  }),
+]);
+
+onMounted(async () => {
+  const data = await fetchAchievement();
+  achievementData.value = data;
+});
 </script>
 
 <template>
@@ -22,7 +35,7 @@ const { isLarge } = useResponsive();
         @on-resume="playState = 'playing'"
       >
         <div
-          v-for="(each, index) in [2020, 2021, 2022, 2023, 2024]"
+          v-for="(data, index) in achievementData"
           :key="index"
           class="z-10 w-[300px] relative"
         >
@@ -34,19 +47,18 @@ const { isLarge } = useResponsive();
               <div
                 class="absolute bottom-2 left-5 font-serif text-[26px] text-[#2F3941] tracking-[.06em] font-semibold"
               >
-                {{ each }}
+                {{ data.year }}
               </div>
             </div>
             <div
               class="mt-[30px] font-serif text-xl font-semibold tracking-[0.08em]"
             >
-              污水下水道系統
+              {{ data.title }}
             </div>
             <div
-              class="mt-[10px] font-sans text-sm tracking-[.08em] text-[#2F3941] leading-[25px]"
+              class="mt-[10px] h-[120px] font-sans text-sm tracking-[.08em] text-[#2F3941] leading-[25px] overflow-y-hidden"
             >
-              新北市碳排放量約為1784萬噸，相較於2005年，碳排放減少了6.7%，人均排放量也減少了
-              13.5%。
+              {{ data.description }}
             </div>
           </div>
         </div>

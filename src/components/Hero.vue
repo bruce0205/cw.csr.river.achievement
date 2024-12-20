@@ -1,19 +1,9 @@
 <script setup>
-import { ref, onMounted, reactive } from "vue";
-const payload = reactive({
-  // title: "新北流域共好",
-  // subtitle: "看見水環境的蛻變實踐",
-});
-async function getSheet() {
-  const originalUrl =
-    "https://script.google.com/macros/s/AKfycbxh8DdxrPIEAcSdOoljDdm-LeRYJn-o1NIB2ST82BBauRJkKphIwY11LOniRLb_TFlS5Q/exec";
-  const response = await fetch(originalUrl, {
-    method: "GET",
-    redirect: "follow", // 默认值就是 'follow'
-  });
-  const data = await response.text();
-  console.log(data);
-}
+import { useAppStore } from "@/stores/appStore";
+import { storeToRefs } from "pinia";
+
+const appStore = useAppStore();
+const { heroHeading } = storeToRefs(appStore);
 
 function scrollToOpening() {
   const opening = document.getElementById("riverPrizeInstruction");
@@ -21,14 +11,6 @@ function scrollToOpening() {
     opening.scrollIntoView({ behavior: "smooth" });
   }
 }
-
-onMounted(async () => {
-  // await getSheet();
-  Object.assign(payload, {
-    title: "新北流域共好",
-    subtitle: "看見水環境的蛻變實踐",
-  });
-});
 </script>
 
 <template>
@@ -49,8 +31,8 @@ onMounted(async () => {
       class="absolute lg:top-[204px] md:top-[384px] top-[278px] debug-border-red lg:w-[400px] md:w-[312px] w-[250px] flex flex-col items-center"
     >
       <img class="" src="@/assets/logo.svg" />
-      <h1 class="title">{{ payload.title }}</h1>
-      <h2 class="subtitle">{{ payload.subtitle }}</h2>
+      <h1 class="title">{{ heroHeading?.title }}</h1>
+      <h2 class="subtitle">{{ heroHeading?.subtitle }}</h2>
       <div
         id="scroll-div"
         class="lg:mt-[150px] md:mt-[200px] mt-[200px]"

@@ -2,29 +2,12 @@
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import useResponsive from "@/composables/useResponsive";
 const { isLarge, isMedium, isSmall, screenType } = useResponsive();
-
 import gsap from "gsap";
+import { fetchGallery } from "@/api/sheetApi";
 import ScrollTrigger from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const photoData = ref([]);
-
-async function getData() {
-  try {
-    const res = await fetch(`https://csr-river-cms.cwg.tw/api/curating`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    });
-
-    const data = await res.json();
-    photoData.value = data;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 const horizontalScrollConfig = {
   sm: { start: "top top", additionX: 15 },
   md: { start: "top top", additionX: 60 },
@@ -36,8 +19,9 @@ const currentScrollConfig = computed(
 
 const scrollAnimation = ref(null);
 onMounted(async () => {
-  getData();
-  // setTimeout(() => {
+  const data = await fetchGallery();
+  photoData.value = data;
+
   scrollAnimation.value = gsap.to(".scroll-box", {
     x() {
       const container = document.querySelector("#h-scroll-container");
@@ -75,7 +59,6 @@ onMounted(async () => {
     .from(".collage-2 .left .text-en", { opacity: 0 })
     .from(".collage-2 .left .text-ch", { opacity: 0 })
     .from(".collage-2 .right-top .text-ch", { opacity: 0 });
-  // }, 100);
 });
 
 onBeforeUnmount(() => {
@@ -105,7 +88,7 @@ onBeforeUnmount(() => {
       <div class="scroll-box__inner">
         <img
           id="image1"
-          :src="photoData[0]?.crt_cover_image"
+          :src="photoData[0]?.imageUrl"
           alt=""
           class="br-l rectangle-l"
         />
@@ -118,22 +101,18 @@ onBeforeUnmount(() => {
                 孕育台灣的文明軌跡
               </p>
               <img
-                :src="photoData[1]?.crt_cover_image"
+                :src="photoData[1]?.imageUrl"
                 alt=""
                 class="block br-m square-l"
               />
             </div>
             <img
-              :src="photoData[2]?.crt_cover_image"
+              :src="photoData[2]?.imageUrl"
               alt=""
               class="right-top br-m rectangle-s"
             />
             <div class="right-bottom flex">
-              <img
-                :src="photoData[3]?.crt_cover_image"
-                alt=""
-                class="br-s square-s"
-              />
+              <img :src="photoData[3]?.imageUrl" alt="" class="br-s square-s" />
               <p class="text-ch font-serif">
                 水系公民行動<br />
                 也因此伴河而生
@@ -141,17 +120,13 @@ onBeforeUnmount(() => {
             </div>
           </div>
         </div>
-        <img
-          :src="photoData[4]?.crt_cover_image"
-          alt=""
-          class="br-l rectangle-l"
-        />
+        <img :src="photoData[4]?.imageUrl" alt="" class="br-l rectangle-l" />
         <div class="collage-2">
           <div class="grid-container">
             <div class="left">
               <p class="text-en font-serif">Chasing Living</p>
               <img
-                :src="photoData[5]?.crt_cover_image"
+                :src="photoData[5]?.imageUrl"
                 alt=""
                 class="block br-m square-l"
               />
@@ -161,11 +136,7 @@ onBeforeUnmount(() => {
               </p>
             </div>
             <div class="right-top">
-              <img
-                :src="photoData[6]?.crt_cover_image"
-                alt=""
-                class="br-s square-s"
-              />
+              <img :src="photoData[6]?.imageUrl" alt="" class="br-s square-s" />
               <p class="text-ch font-serif">
                 這是養育台灣人的母親河，<br />
                 滿載文明底蘊，沉浸如藝術夢境
@@ -173,7 +144,7 @@ onBeforeUnmount(() => {
             </div>
             <div class="right-bottom flex">
               <img
-                :src="photoData[7]?.crt_cover_image"
+                :src="photoData[7]?.imageUrl"
                 alt=""
                 class="br-s rectangle-s"
               />

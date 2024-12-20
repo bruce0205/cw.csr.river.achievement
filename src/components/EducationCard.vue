@@ -10,11 +10,10 @@ const props = defineProps({
 
 <template>
   <div class="card">
-    <div class="card-name">{{ data.name }}</div>
-    <img v-if="data.icon === 'resource'" src="@/assets/resource.svg" />
-    <img v-if="data.icon === 'action'" src="@/assets/action.svg" />
-    <div class="card-title">{{ data.title }}</div>
-    <div class="description">{{ data.description }}</div>
+    <div class="card-name">{{ data?.name }}</div>
+    <img :src="data?.iconUrl" />
+    <div class="card-title">{{ data?.title }}</div>
+    <div class="description">{{ data?.description }}</div>
   </div>
 </template>
 
