@@ -100,7 +100,7 @@ watch(selectedDistrictNo, (newValue) => {
   <div class="map-container">
     <div class="lg:w-[1440px] md:w-[768px] w-[390px]">
       <!-- 4-1> project selection -->
-      <div class="relative project-container z-20">
+      <div class="relative map-project-container z-20">
         <div
           v-for="(project, index) in projectList"
           :key="index"
@@ -147,7 +147,7 @@ watch(selectedDistrictNo, (newValue) => {
           <div
             class="lg:ml-5 md:ml-[18px] ml-[33px] flex flex-col justify-center"
           >
-            <div class="description">
+            <div class="map-description">
               {{ mapDescription }}
             </div>
             <div
@@ -172,35 +172,40 @@ watch(selectedDistrictNo, (newValue) => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .map-container {
   @apply lg:pt-16 md:pt-9 pt-[29px] lg:pb-[100px] md:pb-20 pb-[60px] w-full bg-white flex flex-col items-center;
-}
-.project-badge {
-  @apply cursor-pointer bg-[#F8F9F9] border border-solid border-[#C2C8CC] rounded-[40px] pt-1 pb-[6px] px-4 text-[#87929D] text-[15px] font-sans tracking-[.08em] whitespace-nowrap;
-  &.active {
-    @apply text-[#2F3941] bg-[#FFFFFF];
+
+  .project-badge {
+    @apply cursor-pointer bg-[#F8F9F9] border border-solid border-[#C2C8CC] rounded-[40px] pt-1 pb-[6px] px-4 text-[#87929D] text-[15px] font-sans tracking-[.08em] whitespace-nowrap;
+    &.active {
+      @apply text-[#2F3941] bg-[#FFFFFF];
+    }
   }
-}
-.map {
   @media (width < 768px) {
-    transform: translateX(-8px);
-    @apply w-[390px] -top-8 overflow-hidden;
+    .map > svg {
+      transform: translateX(-12px);
+    }
   }
-  @media (width >= 768px) {
-    @apply left-[90px] top-1;
+  .map {
+    @media (width < 768px) {
+      @apply w-[390px] -top-8 overflow-hidden;
+    }
+    @media (width >= 768px) {
+      @apply left-[90px] top-1;
+    }
+    @media (width >= 1440px) {
+      @apply lg:-left-5;
+    }
   }
-  @media (width >= 1440px) {
-    @apply lg:-left-5;
+  .map-project-container {
+    @apply lg:ml-12 md:ml-[35px] ml-[33px]  flex flex-row gap-x-5 flex-nowrap overflow-x-auto;
   }
-}
-.project-container {
-  @apply lg:ml-12 md:ml-[35px] ml-[33px]  flex flex-row gap-x-5 flex-nowrap overflow-x-auto;
-}
-.description {
-  @apply lg:w-[400px] md:w-[409px] w-[335px] font-sans lg:text-base md:text-[15px] text-[#2F3941] font-normal tracking-[.08em] lg:leading-[28.8px] leading-[27px];
-}
-.click-map {
-  @apply cursor-pointer font-sans lg:text-base text-[15px] text-[#7ECCDE] font-medium tracking-[.08em] lg:leading-[28.8px] leading-[27px];
+  .map-description {
+    @apply lg:w-[400px] md:w-[409px] w-[335px] font-sans lg:text-base md:text-[15px] text-[#2F3941] font-normal tracking-[.08em] lg:leading-[28.8px] leading-[27px];
+  }
+  .click-map {
+    @apply cursor-pointer font-sans lg:text-base text-[15px] text-[#7ECCDE] font-medium tracking-[.08em] lg:leading-[28.8px] leading-[27px];
+  }
 }
 </style>
