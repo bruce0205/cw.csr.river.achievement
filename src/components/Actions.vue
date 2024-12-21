@@ -6,6 +6,7 @@ import SvgIcon from "@/components/SvgIcon.vue";
 const { isLarge, isMedium, screenType } = useResponsive();
 const currentIndex = ref(0);
 
+// TODO: watch selectedProjectNo
 const filterMapData = [];
 for (let i = 1; i <= 6; i++) {
   filterMapData.push({
