@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onUpdated, ref } from "vue";
+import { computed, onUpdated, watch } from "vue";
 import useResponsive from "@/composables/useResponsive";
 import { useMapStore } from "@/stores/mapStore";
 import { useAppStore } from "@/stores/appStore";
@@ -11,7 +11,14 @@ import Landmarks from "./Landmarks.vue";
 const appStore = useAppStore();
 const mapStore = useMapStore();
 const { mapHeading } = storeToRefs(appStore);
-const { projectList, selectedProject } = storeToRefs(mapStore);
+const {
+  projectList,
+  selectedProjectNo,
+  selectedProject,
+  selectedDistrictList,
+  selectedDistrictNo,
+  selectedDistrict,
+} = storeToRefs(mapStore);
 const { isLarge, isMedium } = useResponsive();
 const [anchorMapLg, anchorMapMd, anchorMapSm] = useMaps([
   "anchor-map-lg",
@@ -27,28 +34,41 @@ const targetMap = computed(() => {
     : anchorMapSm.value;
 });
 
+const mapDescription = computed(() => {
+  if (!!selectedDistrict.value?.description)
+    return selectedDistrict.value?.description;
+  return selectedProject.value?.description;
+});
+
+function handleDistrictClick(e) {
+  mapStore.$patch({ selectedDistrictNo: e.target.id.slice(-3) });
+}
+
 function animateAnchor() {
+  const selectedAnchors = selectedDistrictList.value.map((selectedDistrict) => {
+    return selectedDistrict?.districtNo?.toString();
+  });
+
+  // 1) reset anchor style
   const anchors = document.querySelectorAll('[id^="anchor-"]');
   anchors.forEach((anchor) => {
     anchor.style.animation = "bounce-anchor 2s infinite";
+    anchor.style.display = "none";
   });
-  const selectedAnchors = [
-    "207",
-    "208",
-    "220",
-    "221",
-    "222",
-    "239",
-    "242",
-    "251",
-    "252",
-    "253",
-  ];
+
+  // 2) reset district style & event listener
+  const districts = document.querySelectorAll('[id^="ddistrict-"]');
+  districts.forEach((districtEl) => {
+    districtEl.classList.remove("active-district");
+    districtEl.removeEventListener("click", handleDistrictClick);
+  });
+
+  // 3) enable style & event listner
   selectedAnchors.forEach((selectedAnchor) => {
     document.querySelector(`#anchor-${selectedAnchor}`).style.display = "block";
-    document
-      .querySelector(`#ddistrict-${selectedAnchor}`)
-      .classList.add("active-district");
+    const districtEl = document.querySelector(`#ddistrict-${selectedAnchor}`);
+    districtEl.classList.add("active-district");
+    districtEl.addEventListener("click", handleDistrictClick);
   });
 }
 
@@ -59,10 +79,20 @@ function openProjectMap(url) {
 }
 
 onUpdated(() => {
+  animateAnchor();
   setTimeout(() => {
     // requestAnimationFrame(animate);
-    animateAnchor();
   }, 1000);
+});
+
+watch(selectedDistrictNo, (newValue) => {
+  const oldEl = document.querySelector(
+    '[style*="fill: rgb(228, 231, 233)"][id^="ddistrict-"]'
+  );
+  if (oldEl) oldEl.style.fill = "";
+
+  const newEl = document.querySelector(`#ddistrict-${newValue}`);
+  if (newEl) newEl.style.fill = "#E4E7E9";
 });
 </script>
 
@@ -76,7 +106,7 @@ onUpdated(() => {
           :key="index"
           :class="[
             'project-badge',
-            selectedProject?.projectNo === project.projectNo ? 'active' : '',
+            selectedProjectNo === project.projectNo ? 'active' : '',
           ]"
           @click="() => mapStore.selectProject(project.projectNo)"
         >
@@ -118,7 +148,7 @@ onUpdated(() => {
             class="lg:ml-5 md:ml-[18px] ml-[33px] flex flex-col justify-center"
           >
             <div class="description">
-              {{ selectedProject?.description }}
+              {{ mapDescription }}
             </div>
             <div
               v-if="!!selectedProject?.mapUrl"

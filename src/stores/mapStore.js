@@ -7,7 +7,7 @@ import {
 
 export const useMapStore = defineStore("mapStore", {
   state: () => ({
-    selectedProject: null,
+    selectedProjectNo: null,
     selectedDistrictNo: null,
     projectList: [],
     districtList: [],
@@ -15,18 +15,36 @@ export const useMapStore = defineStore("mapStore", {
     actionList: [],
   }),
   getters: {
+    selectedProject: (state) => {
+      return state.projectList.find(
+        (project) => state.selectedProjectNo === project.projectNo
+      );
+    },
+    selectedDistrict: (state) => {
+      return state.districtList.find(
+        (district) =>
+          state.selectedProjectNo === district.projectNo &&
+          state.selectedDistrictNo === district.districtNo
+      );
+    },
     selectedDistrictList: (state) => {
-      return [];
+      if (!!state.selectedProjectNo) {
+        return state.districtList.filter(
+          (district) => district.projectNo === state.selectedProject?.projectNo
+        );
+      } else {
+        return [];
+      }
     },
     selectedLandmarkList: (state) => {
       return state.landmarkList.filter((landmark) => {
-        if (state.selectedDistrictNo === null) {
-          return landmark.projectNo === state.selectedProject?.projectNo;
-        } else {
+        if (!!state.selectedDistrictNo) {
           return (
-            landmark.projectNo === state.selectedProject?.projectNo &&
+            landmark.projectNo === state.selectedProjectNo &&
             landmark.districtNo === state.selectedDistrictNo
           );
+        } else {
+          return landmark.projectNo === state.selectedProjectNo;
         }
       });
     },
@@ -39,15 +57,13 @@ export const useMapStore = defineStore("mapStore", {
         fetchLandmark(),
       ]);
       this.projectList = responses[0];
+      this.districtList = responses[1];
       this.landmarkList = responses[2];
-      // TODO: set default projectNo
-      this.selectedProject = responses[0]?.[0];
+      this.selectedProjectNo = responses[0]?.[0]?.projectNo;
     },
     selectProject(selectedProjectNo) {
-      if (this.selectedProject?.projectNo === selectedProjectNo) return;
-      this.selectedProject = this.projectList.find(
-        (project) => project.projectNo === selectedProjectNo
-      );
+      if (this.selectedProjectNo === selectedProjectNo) return;
+      this.selectedProjectNo = selectedProjectNo;
       this.selectedDistrictNo = null;
     },
   },

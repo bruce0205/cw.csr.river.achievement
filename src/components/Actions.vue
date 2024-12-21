@@ -48,7 +48,6 @@ function moveActionCard(info, containerSelector) {
   //   card.style.opacity = 0.3;
   // });
 
-  // TODO: 只有sm size 的 showLine 需要往後退
   const spaceReduction = isLarge.value ? 0 : isMedium.value ? 0 : 27 + 1;
   const showLine =
     container.getBoundingClientRect().left +

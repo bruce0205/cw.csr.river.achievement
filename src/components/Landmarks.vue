@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed, watchEffect, onUpdated } from "vue";
 import useResponsive from "@/composables/useResponsive";
 import { useMapStore } from "@/stores/mapStore";
 import { storeToRefs } from "pinia";
@@ -12,10 +12,30 @@ const isDragging = ref(false);
 const startX = ref(0);
 const scrollLeft = ref(0);
 const landmarkContainer = ref(null);
+const showNavigator = ref(false);
+
+// watchEffect(() => {
+//   console.log("selectedLandmarkList.value.length", selectedLandmarkList.value.length)
+//   console.log("landmarkContainer.value?.children?.length", landmarkContainer.value?.children?.length);
+// })
+
+onUpdated(() => {
+  if (!selectedLandmarkList.value.length) {
+    showNavigator.value = false;
+    return;
+  }
+  const containerRight = landmarkContainer.value.getBoundingClientRect().right;
+  const lastCardRight =
+    landmarkContainer.value.children[
+      landmarkContainer.value.children.length - 1
+    ].getBoundingClientRect().right;
+
+  showNavigator.value = containerRight <= lastCardRight;
+});
 
 watch(
   () => selectedProject.value?.projectNo,
-  (newValue) => {
+  () => {
     landmarkContainer.value.scrollTo({
       left: 0,
       behavior: "smooth",
@@ -104,14 +124,14 @@ const onDrag = (e) => {
   >
     <div class="lg:w-[640px] md:w-[710px] w-[360px] h-[34px] relative">
       <div
-        v-if="isLarge"
+        v-if="isLarge && showNavigator"
         class="absolute left-0 w-[34px] h-[34px] flex justify-center items-center z-20 cursor-pointer"
         @click="() => movePreviousCard()"
       >
         <img src="@/assets/chevron-circle.svg" />
       </div>
       <div
-        v-if="isLarge"
+        v-if="isLarge && showNavigator"
         class="absolute right-0 w-[34px] h-[34px] flex justify-center items-center z-20 cursor-pointer rotate-180"
         @click="() => moveNextCard()"
       >
@@ -119,13 +139,14 @@ const onDrag = (e) => {
       </div>
       <div
         v-if="isLarge"
-        class="absolute left-0 h-full w-32 z-10 bg-gradient-to-r from-white"
+        class="absolute left-0 h-full w-16 z-10 bg-gradient-to-r from-white"
       ></div>
       <div
         v-if="isLarge"
-        class="absolute right-0 h-full w-32 z-10 bg-gradient-to-l from-white"
+        class="absolute right-0 h-full w-16 z-10 bg-gradient-to-l from-white"
       ></div>
       <div
+        id="landmarks__body"
         ref="landmarkContainer"
         class="landmark-container"
         @mousedown="startDrag"
