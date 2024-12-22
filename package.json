@@ -9,12 +9,12 @@
     "build:dev": "vite build --mode development",
     "build:test": "vite build --mode test",
     "deploy:dev": "ssh root@www.meproz.com 'rm -rf /var/www/new-taipei && mkdir /var/www/new-taipei' && scp -r dist/* root@www.meproz.com:/var/www/new-taipei",
-    "deploy:meproz": "ssh root@www.meproz.com 'rm -rf /var/www/kelly/_test-by-cwlab/2024newtaipeiriver && mkdir -p /var/www/kelly/_test-by-cwlab/2024newtaipeiriver' && scp -r dist/* root@www.meproz.com:/var/www/kelly/_test-by-cwlab/2024newtaipeiriver",
     "preview": "vite preview"
   },
   "dependencies": {
     "@fontsource/noto-sans-tc": "^5.1.0",
     "@fontsource/noto-serif-tc": "^5.1.1",
+    "dayjs": "^1.11.13",
     "gsap": "^3.12.2",
     "pinia": "^2.3.0",
     "vue": "^3.5.12",

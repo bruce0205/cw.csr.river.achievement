@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed, watchEffect, onUpdated } from "vue";
+import { ref, watch, onUpdated } from "vue";
 import useResponsive from "@/composables/useResponsive";
 import { useMapStore } from "@/stores/mapStore";
 import { storeToRefs } from "pinia";
@@ -13,11 +13,6 @@ const startX = ref(0);
 const scrollLeft = ref(0);
 const landmarkContainer = ref(null);
 const showNavigator = ref(false);
-
-// watchEffect(() => {
-//   console.log("selectedLandmarkList.value.length", selectedLandmarkList.value.length)
-//   console.log("landmarkContainer.value?.children?.length", landmarkContainer.value?.children?.length);
-// })
 
 onUpdated(() => {
   if (!selectedLandmarkList.value.length) {

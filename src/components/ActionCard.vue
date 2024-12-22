@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import useResponsive from "@/composables/useResponsive";
+import dayjs from "dayjs";
 import whiteRiverIcon from "@/assets/images/white-hamburger.svg";
 import blueRiverIcon from "@/assets/images/blue-hamburger.svg";
 const props = defineProps({
@@ -17,25 +18,37 @@ const place = computed(() => {
   return `${props.data.city_name}`;
 });
 
-const { isLarge, isMedium, isSmall, screenType } = useResponsive();
+const { isLarge } = useResponsive();
+
+const imgSrc = computed(() => {
+  if (props.data?.act_award === 1) {
+    if (dayjs().isBefore(props.data.act_signup_end)) {
+      return blueRiverIcon;
+    } else {
+      return whiteRiverIcon;
+    }
+  }
+});
 </script>
 
 <template>
   <div v-if="isLarge" class="card-lg">
     <div
       class="flex items-start"
-      :style="{ justifyContent: data.award ? 'space-between' : 'flex-end' }"
+      :style="{ justifyContent: data.act_award ? 'space-between' : 'flex-end' }"
     >
       <div
-        v-if="data.award"
+        v-if="data.act_award"
         :style="{
           backgroundColor:
-            data.award && data.isSignup ? '#ffffffe0' : '#0202024f',
+            data.act_award && dayjs().isBefore(data.act_signup_end)
+              ? '#ffffffe0'
+              : '#0202024f',
         }"
         class="rounded-[50px] backdrop-blur-sm w-[56px] h-[35px] flex justify-center items-center"
       >
         <img
-          :src="data.award && data.isSignup ? blueRiverIcon : whiteRiverIcon"
+          :src="imgSrc"
           alt="流域行動大賞 icon"
           class="w-[32px] h-[22px] self-center block"
         />
@@ -44,7 +57,7 @@ const { isLarge, isMedium, isSmall, screenType } = useResponsive();
         {{ data.exh_name }}
       </div>
     </div>
-     <div class="grow"></div>
+    <div class="grow"></div>
     <p class="card-lg__description font-serif">
       {{ data.act_subtitle }}
     </p>

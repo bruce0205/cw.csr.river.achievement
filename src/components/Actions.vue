@@ -1,27 +1,17 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import useResponsive from "@/composables/useResponsive";
 import ActionCard from "./ActionCard.vue";
 import SvgIcon from "@/components/SvgIcon.vue";
+import { useMapStore } from "@/stores/mapStore";
+import { storeToRefs } from "pinia";
+
+const RIVER_URL = import.meta.env.VITE_RIVER_URL;
+const mapStore = useMapStore();
 const { isLarge, isMedium, screenType } = useResponsive();
 const currentIndex = ref(0);
-
-// TODO: watch selectedProjectNo
-const filterMapData = [];
-for (let i = 1; i <= 6; i++) {
-  filterMapData.push({
-    id: 100,
-    org_short: "組織企業",
-    city_name: "台北市/大安",
-    act_date: "2023.09.24",
-    act_subtitle: `${i}.淡水三芝海岸淨灘行動`,
-    exh_name: "生態保育",
-    award: true,
-    isSignup: true,
-    act_cover_image:
-      "https://csr.cw.com.tw/topics/2023river/pixs/action/horizontal/action_pc-55.jpg",
-  });
-}
+const { selectedActionList } = storeToRefs(mapStore);
+const showNavigator = ref(false);
 
 watch(
   () => screenType,
@@ -68,18 +58,20 @@ function moveActionCard(info, containerSelector) {
 }
 
 async function goToAction(id) {
-  // FIXME: await navigateTo({ name: 'action-id', params: { id } });
+  window.open(`${RIVER_URL}/action/${id}`, "_blank");
 }
 
-function showNavigator() {
-  const baseCount = isLarge ? 3 : isMedium ? 2 : 1;
-  return filterMapData.length > baseCount;
-}
+watch(selectedActionList, (newValue) => {
+  console.log("isLarge", isLarge);
+  console.log("isMedium", isMedium);
+  const baseCount = isLarge.value ? 3 : isMedium.value ? 2 : 1;
+  showNavigator.value = newValue?.length > baseCount;
+});
 </script>
 
 <template>
   <div class="actions">
-    <div class="actions__title">
+    <div v-if="!!selectedActionList?.length" class="actions__title">
       <p class="title font-serif">•推薦行動</p>
     </div>
     <div
@@ -88,20 +80,20 @@ function showNavigator() {
       @scroll="(info) => moveActionCard(info, '.actions__body')"
     >
       <ActionCard
-        v-for="(data, index) in filterMapData"
+        v-for="(data, index) in selectedActionList"
         :key="index"
         :data="data"
         @click="() => goToAction(data.id)"
       />
     </div>
     <SvgIcon
-      v-show="showNavigator() && isLarge"
+      v-show="showNavigator && isLarge"
       name="action-navigator-previous"
       class="navigator--previous"
       @click="() => moveActionCard(currentIndex - 1, '.actions__body')"
     />
     <SvgIcon
-      v-show="showNavigator() && isMedium"
+      v-show="showNavigator && isMedium"
       name="action-navigator-next"
       class="navigator--next"
       @click="() => moveActionCard(currentIndex + 1, '.actions__body')"

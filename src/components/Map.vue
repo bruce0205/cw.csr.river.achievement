@@ -65,10 +65,14 @@ function animateAnchor() {
 
   // 3) enable style & event listner
   selectedAnchors.forEach((selectedAnchor) => {
-    document.querySelector(`#anchor-${selectedAnchor}`).style.display = "block";
+    const anchorEl = document.querySelector(`#anchor-${selectedAnchor}`);
+    if (!!anchorEl) anchorEl.style.display = "block";
+
     const districtEl = document.querySelector(`#ddistrict-${selectedAnchor}`);
-    districtEl.classList.add("active-district");
-    districtEl.addEventListener("click", handleDistrictClick);
+    if (!!districtEl) {
+      districtEl.classList.add("active-district");
+      districtEl.addEventListener("click", handleDistrictClick);
+    }
   });
 }
 

@@ -132,7 +132,7 @@ export const fetchHeading = async () => {
 };
 
 export const fetchMapProject = async () => {
-  const range = "map-project!A3:E10";
+  const range = "map-project!A3:F10";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
   try {
     const response = await fetch(url);
