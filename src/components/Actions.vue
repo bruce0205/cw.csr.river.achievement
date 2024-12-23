@@ -62,8 +62,6 @@ async function goToAction(id) {
 }
 
 watch(selectedActionList, (newValue) => {
-  console.log("isLarge", isLarge);
-  console.log("isMedium", isMedium);
   const baseCount = isLarge.value ? 3 : isMedium.value ? 2 : 1;
   showNavigator.value = newValue?.length > baseCount;
 });

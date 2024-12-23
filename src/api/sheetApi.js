@@ -1,3 +1,4 @@
+import newTaipeiDistricts from "@/consts/new_taipei_districts.json";
 const API_KEY = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY;
 const SHEET_ID = import.meta.env.VITE_SHEET_ID;
 
@@ -17,7 +18,7 @@ export const getSheetData = async (range) => {
 };
 
 export const fetchGallery = async () => {
-  const range = "gallery!A3:C10";
+  const range = "gallery!A3:D10";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
   try {
     const response = await fetch(url);
@@ -29,6 +30,7 @@ export const fetchGallery = async () => {
           no: item[0],
           imageUrl: item[1],
           description: item[2],
+          clickUrl: item[3],
         };
       });
     }
@@ -62,7 +64,7 @@ export const fetchIntroduction = async () => {
 };
 
 export const fetchEducation = async () => {
-  const range = "education!A3:E12";
+  const range = "education!A3:F17";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
   try {
     const response = await fetch(url);
@@ -76,6 +78,7 @@ export const fetchEducation = async () => {
           iconUrl: item[2],
           title: item[3],
           description: item[4],
+          clickUrl: item[5],
         };
       });
     }
@@ -86,7 +89,7 @@ export const fetchEducation = async () => {
 };
 
 export const fetchAchievement = async () => {
-  const range = "achievement!A3:D12";
+  const range = "achievement!A3:D22";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
   try {
     const response = await fetch(url);
@@ -157,7 +160,7 @@ export const fetchMapProject = async () => {
 };
 
 export const fetchMapDistrict = async () => {
-  const range = "map-district!A3:C52";
+  const range = "map-district!A3:D52";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
   try {
     const response = await fetch(url);
@@ -165,9 +168,13 @@ export const fetchMapDistrict = async () => {
 
     if (response.ok) {
       return data.values.map((item) => {
+        const districtInfo = newTaipeiDistricts.find(
+          (newTaipeiDistrict) => newTaipeiDistrict.name === item[1]
+        );
         return {
           projectNo: item[0],
-          districtNo: item[1],
+          districtNo: districtInfo?.zip,
+          districtName: item[1],
           description: item[2],
         };
       });
@@ -187,9 +194,14 @@ export const fetchLandmark = async () => {
 
     if (response.ok) {
       return data.values.map((item) => {
+        const districtInfo = newTaipeiDistricts.find(
+          (newTaipeiDistrict) => newTaipeiDistrict.name === item[1]
+        );
+
         return {
           projectNo: item[0],
-          districtNo: item[1],
+          districtNo: districtInfo?.zip,
+          districtName: item[1],
           landmarkName: item[2],
           landmarkUrl: item[3],
         };

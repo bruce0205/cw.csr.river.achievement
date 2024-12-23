@@ -1,15 +1,21 @@
 <script setup>
-import { ref, onMounted, reactive } from "vue";
 const props = defineProps({
   data: {
     type: Object,
     required: true,
   },
 });
+
+const clickUrlFn = (url) => {
+  if (!!url) window.open(url, "_blank");
+};
 </script>
 
 <template>
-  <div class="card">
+  <div
+    :class="['card', !!data?.clickUrl ? 'cursor-pointer' : '']"
+    @click="clickUrlFn(data?.clickUrl)"
+  >
     <div class="card-name">{{ data?.name }}</div>
     <img :src="data?.iconUrl" />
     <div class="card-title">{{ data?.title }}</div>
@@ -19,7 +25,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .card {
-  @apply lg:w-[380px] w-[320px] lg:h-[350px] h-[360px] pt-[30px] lg:px-[43px] px-[37px] border border-solid border-[#D8DCDE] bg-white rounded-[20px] flex flex-col items-center gap-y-4 cursor-pointer;
+  @apply lg:w-[380px] w-[320px] lg:h-[350px] h-[360px] pt-[30px] lg:px-[43px] px-[37px] border border-solid border-[#D8DCDE] bg-white rounded-[20px] flex flex-col items-center gap-y-4;
 }
 .card-name {
   @apply font-serif text-sm font-semibold tracking-[.08em] text-[#68737D];

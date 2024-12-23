@@ -64,6 +64,10 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   scrollAnimation.value.kill();
 });
+
+const clickUrlFn = (url) => {
+  if (!!url) window.open(url, "_blank");
+};
 </script>
 
 <template>
@@ -89,8 +93,13 @@ onBeforeUnmount(() => {
         <img
           id="image1"
           :src="photoData[0]?.imageUrl"
-          alt=""
-          class="br-l rectangle-l"
+          :alt="photoData[0]?.description"
+          :class="[
+            'br-l',
+            'rectangle-l',
+            photoData[0]?.clickUrl ? 'cursor-pointer' : '',
+          ]"
+          @click="clickUrlFn(photoData[0]?.clickUrl)"
         />
         <div class="collage-1">
           <p class="text-en font-serif">Landscape</p>
@@ -102,17 +111,38 @@ onBeforeUnmount(() => {
               </p>
               <img
                 :src="photoData[1]?.imageUrl"
-                alt=""
-                class="block br-m square-l"
+                :alt="photoData[1]?.description"
+                :class="[
+                  'block',
+                  'br-m',
+                  'square-l',
+                  photoData[1]?.clickUrl ? 'cursor-pointer' : '',
+                ]"
+                @click="clickUrlFn(photoData[1]?.clickUrl)"
               />
             </div>
             <img
               :src="photoData[2]?.imageUrl"
-              alt=""
-              class="right-top br-m rectangle-s"
+              :alt="photoData[2]?.description"
+              :class="[
+                'right-top',
+                'br-m',
+                'rectangle-s',
+                photoData[2]?.clickUrl ? 'cursor-pointer' : '',
+              ]"
+              @click="clickUrlFn(photoData[2]?.clickUrl)"
             />
             <div class="right-bottom flex">
-              <img :src="photoData[3]?.imageUrl" alt="" class="br-s square-s" />
+              <img
+                :src="photoData[3]?.imageUrl"
+                :alt="photoData[3]?.description"
+                :class="[
+                  'br-s',
+                  'square-s',
+                  photoData[3]?.clickUrl ? 'cursor-pointer' : '',
+                ]"
+                @click="clickUrlFn(photoData[3]?.clickUrl)"
+              />
               <p class="text-ch font-serif">
                 水系公民行動<br />
                 也因此伴河而生
@@ -120,15 +150,30 @@ onBeforeUnmount(() => {
             </div>
           </div>
         </div>
-        <img :src="photoData[4]?.imageUrl" alt="" class="br-l rectangle-l" />
+        <img
+          :src="photoData[4]?.imageUrl"
+          :alt="photoData[4]?.description"
+          :class="[
+            'br-l',
+            'rectangle-l',
+            photoData[4]?.clickUrl ? 'cursor-pointer' : '',
+          ]"
+          @click="clickUrlFn(photoData[4]?.clickUrl)"
+        />
         <div class="collage-2">
           <div class="grid-container">
             <div class="left">
               <p class="text-en font-serif">Chasing Living</p>
               <img
                 :src="photoData[5]?.imageUrl"
-                alt=""
-                class="block br-m square-l"
+                :alt="photoData[5]?.description"
+                :class="[
+                  'block',
+                  'br-m',
+                  'square-l',
+                  photoData[5]?.clickUrl ? 'cursor-pointer' : '',
+                ]"
+                @click="clickUrlFn(photoData[5]?.clickUrl)"
               />
               <p class="text-ch font-serif">
                 晨曦與夕陽輪替，<br />
@@ -136,7 +181,16 @@ onBeforeUnmount(() => {
               </p>
             </div>
             <div class="right-top">
-              <img :src="photoData[6]?.imageUrl" alt="" class="br-s square-s" />
+              <img
+                :src="photoData[6]?.imageUrl"
+                :alt="photoData[6]?.description"
+                :class="[
+                  'br-s',
+                  'square-s',
+                  photoData[6]?.clickUrl ? 'cursor-pointer' : '',
+                ]"
+                @click="clickUrlFn(photoData[6]?.clickUrl)"
+              />
               <p class="text-ch font-serif">
                 這是養育台灣人的母親河，<br />
                 滿載文明底蘊，沉浸如藝術夢境
@@ -145,8 +199,13 @@ onBeforeUnmount(() => {
             <div class="right-bottom flex">
               <img
                 :src="photoData[7]?.imageUrl"
-                alt=""
-                class="br-s rectangle-s"
+                :alt="photoData[7]?.description"
+                :class="[
+                  'br-s',
+                  'rectangle-s',
+                  photoData[7]?.clickUrl ? 'cursor-pointer' : '',
+                ]"
+                @click="clickUrlFn(photoData[7]?.clickUrl)"
               />
             </div>
           </div>

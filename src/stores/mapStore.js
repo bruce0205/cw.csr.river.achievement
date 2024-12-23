@@ -79,13 +79,17 @@ export const useMapStore = defineStore("mapStore", {
         const selectedProject = this.projectList.find(
           (project) => selectedProjectNo === project.projectNo
         );
-        const actions = await Promise.all(
-          selectedProject.actions?.split(",").map((id) => getAction(id?.trim()))
-        );
-        this.actionList.push({
-          projectNo: selectedProjectNo,
-          actions: actions,
-        });
+        if (!!selectedProject.actions) {
+          const actions = await Promise.all(
+            selectedProject.actions
+              ?.split(",")
+              .map((id) => getAction(id?.trim()))
+          );
+          this.actionList.push({
+            projectNo: selectedProjectNo,
+            actions: actions,
+          });
+        }
       }
 
       // 2) put into state
