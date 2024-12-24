@@ -1,5 +1,3 @@
-import { onBeforeUnmount } from "vue";
-
 export default {
   mounted(el, binding) {
     const targetEvent = binding.value || "viewport-section-viewed"; // 可指定事件名稱
