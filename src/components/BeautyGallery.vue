@@ -76,7 +76,7 @@ const clickUrlFn = (url) => {
       <div class="heading">
         <span class="heading__en font-serif">Crystal Curating</span>
         <h2 class="heading__title font-serif">走近 流域之美</h2>
-        <h2 class="heading__subtitle font-serif">流域的共生藝術夢境</h2>
+        <h3 class="heading__subtitle font-serif">流域的共生藝術夢境</h3>
       </div>
     </div>
     <div class="scroll-box">
@@ -84,8 +84,8 @@ const clickUrlFn = (url) => {
         <div>
           <div class="heading">
             <span class="heading__en">Crystal Curating</span>
-            <h2 class="heading__title">走近 流域之美2</h2>
-            <h3 class="heading__subtitle">流域的共生藝術夢境</h3>
+            <div class="heading__title">走近 流域之美2</div>
+            <div class="heading__subtitle">流域的共生藝術夢境</div>
           </div>
         </div>
       </div>

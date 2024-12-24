@@ -63,9 +63,11 @@ function showNavigator() {
 
 <template>
   <div
+    id="education"
+    v-track-viewport="'education-viewed'"
     class="lg:pb-[120px] md:pb-[100px] pb-20 lg:w-[790px] md:w-[660px] w-[320px] flex flex-col items-center"
   >
-    <div class="topic">{{ educationHeading?.title }}</div>
+    <h2 class="topic">{{ educationHeading?.title }}</h2>
     <div class="educations lg:mt-[60px] md:mt-[40px] mt-[30px]">
       <div
         id="educations__body"

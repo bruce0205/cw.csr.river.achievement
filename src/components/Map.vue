@@ -101,7 +101,7 @@ watch(selectedDistrictNo, (newValue) => {
 </script>
 
 <template>
-  <div class="map-container">
+  <div id="map" v-track-viewport="'map-viewed'" class="map-container">
     <div class="lg:w-[1440px] md:w-[768px] w-[390px]">
       <!-- 4-1> project selection -->
       <div class="relative map-project-container z-20">
@@ -126,16 +126,16 @@ watch(selectedDistrictNo, (newValue) => {
         <div
           class="absolute lg:top-[60px] lg:right-[810px] md:top-[34px] md:right-[70px] right-5 top-[210px] z-20 flex flex-col gap-x-2"
         >
-          <div
+          <h2
             class="font-semibold font-serif text-[#2F3941] lg:text-[50px] md:text-[40px] text-[36px]"
           >
             {{ mapHeading?.title }}
-          </div>
-          <div
+          </h2>
+          <h3
             class="mt-1 font-semibold font-serif text-[#2F3941] lg:text-sm text-xs"
           >
             {{ mapHeading?.subtitle }}
-          </div>
+          </h3>
         </div>
 
         <!-- 4-4) description -->

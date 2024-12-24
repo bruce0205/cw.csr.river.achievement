@@ -6,7 +6,7 @@ const appStore = useAppStore();
 const { heroHeading } = storeToRefs(appStore);
 
 function scrollToOpening() {
-  const opening = document.getElementById("riverPrizeInstruction");
+  const opening = document.getElementById("introduction");
   if (opening) {
     opening.scrollIntoView({ behavior: "smooth" });
   }

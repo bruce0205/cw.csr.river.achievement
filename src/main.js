@@ -6,9 +6,11 @@ import "@fontsource/noto-serif-tc";
 import "@fontsource/noto-sans-tc";
 import "virtual:svg-icons-register";
 import Vue3Marquee from "vue3-marquee";
+import TrackViewport from './directives/TrackViewport';
 
 const app = createApp(App);
 
+app.directive('track-viewport', TrackViewport);
 app.use(createPinia());
 app.use(Vue3Marquee)
 
