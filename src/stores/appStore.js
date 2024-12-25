@@ -1,30 +1,30 @@
 import { defineStore } from "pinia";
-import { fetchHeading } from "@/api/sheetApi";
+import { fetchSection } from "@/api/sheetApi";
 
 export const useAppStore = defineStore("appStore", {
   state: () => ({
-    headings: [],
+    sections: [],
   }),
   getters: {
-    heroHeading: (state) => {
-      return state.headings?.find((heading) => heading.section === "hero");
+    heroSection: (state) => {
+      return state.sections?.find((section) => section.section === "hero");
     },
-    introductionHeading: (state) => {
-      return state.headings?.find(
-        (heading) => heading.section === "introduction"
+    introductionSection: (state) => {
+      return state.sections?.find(
+        (section) => section.section === "introduction"
       );
     },
-    educationHeading: (state) => {
-      return state.headings?.find((heading) => heading.section === "education");
+    educationSection: (state) => {
+      return state.sections?.find((section) => section.section === "education");
     },
-    mapHeading: (state) => {
-      return state.headings?.find((heading) => heading.section === "map");
+    mapSection: (state) => {
+      return state.sections?.find((section) => section.section === "map");
     },
   },
   actions: {
-    async setHeadings() {
-      const response = await fetchHeading();
-      this.headings = response;
+    async setSections() {
+      const response = await fetchSection();
+      this.sections = response;
     },
   },
 });

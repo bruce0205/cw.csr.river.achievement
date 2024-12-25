@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia";
 import { fetchIntroduction } from "@/api/sheetApi";
 
 const appStore = useAppStore();
-const { introductionHeading } = storeToRefs(appStore);
+const { introductionSection } = storeToRefs(appStore);
 const introductionData = ref([
   ...Array(3).fill({
     loading: true,
@@ -24,7 +24,7 @@ onMounted(async () => {
     v-track-viewport="'introduction-viewed'"
     class="lg:pt-20 lg:pb-[120px] md:pt-[60px] md:pb-[100px] pt-10 pb-20 lg:w-[972px] md:w-[678px] w-[282px] flex flex-col items-center"
   >
-    <h2 class="title">{{ introductionHeading?.title }}</h2>
+    <h2 class="title">{{ introductionSection?.title }}</h2>
     <div
       class="lg:mt-10 md:mt-[26px] mt-6 w-full grid md:grid-cols-3 grid-cols-1 lg:gap-x-[120px] md:gap-x-[60px] gap-y-[60px]"
     >

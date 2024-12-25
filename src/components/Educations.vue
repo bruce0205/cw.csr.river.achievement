@@ -8,7 +8,7 @@ import SvgIcon from "@/components/SvgIcon.vue";
 import { fetchEducation } from "@/api/sheetApi";
 
 const appStore = useAppStore();
-const { educationHeading } = storeToRefs(appStore);
+const { educationSection } = storeToRefs(appStore);
 const educationData = ref([]);
 const { isMedium, screenType } = useResponsive();
 const currentIndex = ref(0);
@@ -67,7 +67,7 @@ function showNavigator() {
     v-track-viewport="'education-viewed'"
     class="lg:pb-[120px] md:pb-[100px] pb-20 lg:w-[790px] md:w-[660px] w-[320px] flex flex-col items-center"
   >
-    <h2 class="topic">{{ educationHeading?.title }}</h2>
+    <h2 class="topic">{{ educationSection?.title }}</h2>
     <div class="educations lg:mt-[60px] md:mt-[40px] mt-[30px]">
       <div
         id="educations__body"

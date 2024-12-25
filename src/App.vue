@@ -14,7 +14,7 @@ const appStore = useAppStore();
 const mapStore = useMapStore();
 
 onMounted(async () => {
-  appStore.setHeadings();
+  appStore.setSections();
   mapStore.initMap();
 });
 </script>

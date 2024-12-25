@@ -108,8 +108,8 @@ export const fetchAchievement = async () => {
   }
 };
 
-export const fetchHeading = async () => {
-  const range = "heading!A3:D6";
+export const fetchSection = async () => {
+  const range = "section!A3:D8";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
   try {
     const response = await fetch(url);

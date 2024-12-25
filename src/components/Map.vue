@@ -10,7 +10,7 @@ import Landmarks from "./Landmarks.vue";
 
 const appStore = useAppStore();
 const mapStore = useMapStore();
-const { mapHeading } = storeToRefs(appStore);
+const { mapSection } = storeToRefs(appStore);
 const {
   projectList,
   selectedProjectNo,
@@ -129,12 +129,12 @@ watch(selectedDistrictNo, (newValue) => {
           <h2
             class="font-semibold font-serif text-[#2F3941] lg:text-[50px] md:text-[40px] text-[36px]"
           >
-            {{ mapHeading?.title }}
+            {{ mapSection?.title }}
           </h2>
           <h3
             class="mt-1 font-semibold font-serif text-[#2F3941] lg:text-sm text-xs"
           >
-            {{ mapHeading?.subtitle }}
+            {{ mapSection?.subtitle }}
           </h3>
         </div>
 

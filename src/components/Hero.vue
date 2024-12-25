@@ -3,7 +3,7 @@ import { useAppStore } from "@/stores/appStore";
 import { storeToRefs } from "pinia";
 
 const appStore = useAppStore();
-const { heroHeading } = storeToRefs(appStore);
+const { heroSection } = storeToRefs(appStore);
 
 function scrollToOpening() {
   const opening = document.getElementById("introduction");
@@ -14,7 +14,7 @@ function scrollToOpening() {
 </script>
 
 <template>
-  <div class="hero">
+  <div id="hero" class="hero">
     <video
       class="video"
       autoplay
@@ -31,8 +31,8 @@ function scrollToOpening() {
       class="absolute lg:top-[204px] md:top-[384px] top-[278px] debug-border-red lg:w-[400px] md:w-[312px] w-[250px] flex flex-col items-center"
     >
       <img class="" src="@/assets/logo.svg" />
-      <h1 class="title">{{ heroHeading?.title }}</h1>
-      <h2 class="subtitle">{{ heroHeading?.subtitle }}</h2>
+      <h1 class="title">{{ heroSection?.title }}</h1>
+      <h2 class="subtitle">{{ heroSection?.subtitle }}</h2>
       <div
         id="scroll-div"
         class="lg:mt-[150px] md:mt-[200px] mt-[200px]"
