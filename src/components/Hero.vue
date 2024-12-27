@@ -6,7 +6,7 @@ const appStore = useAppStore();
 const { heroSection } = storeToRefs(appStore);
 
 function scrollToOpening() {
-  const opening = document.getElementById("introduction");
+  const opening = document.getElementById("foreword");
   if (opening) {
     opening.scrollIntoView({ behavior: "smooth" });
   }
@@ -14,7 +14,7 @@ function scrollToOpening() {
 </script>
 
 <template>
-  <div id="hero" class="hero">
+  <div id="index" v-track-viewport="'hero-viewed'" class="hero">
     <video
       class="video"
       autoplay

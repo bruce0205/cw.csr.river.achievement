@@ -24,7 +24,7 @@ onMounted(async () => {
 
   scrollAnimation.value = gsap.to(".scroll-box", {
     x() {
-      const container = document.querySelector("#gallery");
+      const container = document.querySelector("#media-gallery");
       return `${-(
         container.scrollWidth -
         container.clientWidth +
@@ -71,7 +71,11 @@ const clickUrlFn = (url) => {
 </script>
 
 <template>
-  <div id="gallery" class="scroll-container">
+  <div
+    id="media-gallery"
+    v-track-viewport="'gallery-viewed'"
+    class="scroll-container"
+  >
     <div class="scroll-container-header lt-lg">
       <div class="heading">
         <span class="heading__en font-serif">Crystal Curating</span>

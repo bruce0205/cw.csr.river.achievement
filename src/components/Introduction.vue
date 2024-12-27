@@ -20,7 +20,7 @@ onMounted(async () => {
 
 <template>
   <div
-    id="introduction"
+    id="foreword"
     v-track-viewport="'introduction-viewed'"
     class="lg:pt-20 lg:pb-[120px] md:pt-[60px] md:pb-[100px] pt-10 pb-20 lg:w-[972px] md:w-[678px] w-[282px] flex flex-col items-center"
   >

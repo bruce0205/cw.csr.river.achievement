@@ -18,7 +18,7 @@ onMounted(async () => {
 
 <template>
   <div
-    id="achievement"
+    id="milestone"
     v-track-viewport="'achievement-viewed'"
     class="lg:pt-20 md:pt-[60px] pt-10 lg:pb-[120px] md:pb-[100px] pb-20 lg:w-[1210px] md:w-[768px] w-full"
   >

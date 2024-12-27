@@ -63,7 +63,7 @@ function showNavigator() {
 
 <template>
   <div
-    id="education"
+    id="external-resources"
     v-track-viewport="'education-viewed'"
     class="lg:pb-[120px] md:pb-[100px] pb-20 lg:w-[790px] md:w-[660px] w-[320px] flex flex-col items-center"
   >

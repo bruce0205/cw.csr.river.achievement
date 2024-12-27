@@ -3,7 +3,11 @@ import SvgIcon from "@/components/SvgIcon.vue";
 </script>
 
 <template>
-  <div class="w-full lg:py-20 md:py-[60px] py-10 flex flex-col items-center">
+  <div
+    id="footer"
+    v-track-viewport="'footer-viewed'"
+    class="w-full lg:py-20 md:py-[60px] py-10 flex flex-col items-center"
+  >
     <img class="lg:w-[270px] w-[230px]" src="@/assets/logo.svg" />
     <div
       class="mt-[21px] text-2xl font-serif font-semibold text-[#C2C8CC] tracking-[.2em]"
