@@ -6,9 +6,9 @@ export default {
       ([entry]) => {
         if (entry.isIntersecting) {
           // 當目標區塊進入視口
-          console.log("bingobingo", targetEvent, el.id);
+          console.log("SectionViewed", `event:${targetEvent}`, `id:${el.id}`);
           // window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push({
+          window.dataLayer?.push({
             event: "cwdigiteam",
             action: "2024newtaipeiriverAction",
             tag: el.id || "unknown-section", // 可用元素 ID 或其他標識

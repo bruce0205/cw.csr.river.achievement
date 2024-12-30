@@ -22,7 +22,10 @@ const { isLarge } = useResponsive();
 
 const imgSrc = computed(() => {
   if (props.data?.act_award === 1) {
-    if (dayjs().isBefore(props.data.act_signup_end)) {
+    if (
+      dayjs().isBefore(props.data.act_signup_end) ||
+      !dayjs(props.data.act_signup_end).isValid()
+    ) {
       return blueRiverIcon;
     } else {
       return whiteRiverIcon;

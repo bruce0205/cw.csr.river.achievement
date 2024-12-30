@@ -10,8 +10,16 @@ import BeautyGallery from "@/components/BeautyGallery.vue";
 import Educations from "@/components/Educations.vue";
 import Footer from "@/components/Footer.vue";
 import CookieBar from "@/components/CookieBar.vue";
+import { loadGtm } from "@/utils/gtm-loader";
+const GTM_ID = import.meta.env.VITE_GTM_ID;
+
 const appStore = useAppStore();
 const mapStore = useMapStore();
+
+onMounted(() => {
+  console.log("GTM_ID", GTM_ID)
+  if (!!GTM_ID) loadGtm(GTM_ID);
+});
 
 onMounted(async () => {
   appStore.setSections();

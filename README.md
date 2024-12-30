@@ -1,5 +1,8 @@
-## google sheet
-https://docs.google.com/spreadsheets/d/1FCsRfXOJR61vmQydx2HEwCuuHeLH5u2DcJMWGlH-lyw/edit?usp=sharing
+## cw google sheet
++ url
+  + https://docs.google.com/spreadsheets/d/1FCsRfXOJR61vmQydx2HEwCuuHeLH5u2DcJMWGlH-lyw/edit?usp=sharing
++ api-key
+  + AIzaSyDxHVlYojwDk-Ge8Rf6TbyLoNsTgd43_jE
 
 ## for cw testing
 ```
