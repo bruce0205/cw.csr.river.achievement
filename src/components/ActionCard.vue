@@ -32,6 +32,15 @@ const imgSrc = computed(() => {
     }
   }
 });
+const iconBg = computed(() => {
+  const endAt = props.data?.act_signup_end
+    ? dayjs(props.data?.act_signup_end, "YYYY-MM-DD HH:mm:ss")
+    : dayjs("2099-12-31");
+  if (props.data?.act_award === 1 && !dayjs().isBefore(endAt))
+    return "#0202024f";
+  if (props.data?.act_award === 1 && dayjs().isBefore(endAt))
+    return "#ffffffe0";
+});
 </script>
 
 <template>
@@ -42,13 +51,7 @@ const imgSrc = computed(() => {
     >
       <div
         v-if="data.act_award"
-        :style="{
-          backgroundColor:
-            data.act_award && dayjs().isBefore(data.act_signup_end)
-              ? '#ffffffe0'
-              : '#0202024f',
-        }"
-        class="rounded-[50px] backdrop-blur-sm w-[56px] h-[35px] flex justify-center items-center"
+        class="rounded-[50px] backdrop-blur-sm w-[56px] h-[35px] flex justify-center items-center item-river"
       >
         <img
           :src="imgSrc"
@@ -281,6 +284,9 @@ const imgSrc = computed(() => {
   &__date {
     line-height: 1.6;
     letter-spacing: 0.88px;
+  }
+  .item-river {
+    background: v-bind("iconBg");
   }
 }
 </style>
