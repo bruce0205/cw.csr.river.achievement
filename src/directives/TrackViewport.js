@@ -13,6 +13,12 @@ export default {
             action: "2024newtaipeiriverAction",
             tag: el.id || "unknown-section", // 可用元素 ID 或其他標識
           });
+          if (!!fbq) {
+            fbq("track", "cwdigiteam", {
+              action: "2024newtaipeiriverAction",
+              tag: el.id || "unknown-section",
+            });
+          }
         }
       },
       { threshold: 0.5 } // 滾動到 50% 可見時觸發
