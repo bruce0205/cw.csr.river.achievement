@@ -39,6 +39,27 @@ export const fetchGallery = async () => {
   }
 };
 
+export const fetchGalleryMessage = async () => {
+  const range = "gallery-message!B3:C11";
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (response.ok) {
+      return data.values.map((item) => {
+        return {
+          position: item[0],
+          message: item[1],
+        };
+      });
+    }
+    throw data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const fetchIntroduction = async () => {
   const range = "introduction!A3:D5";
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`;

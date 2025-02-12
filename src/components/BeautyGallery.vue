@@ -3,11 +3,12 @@ import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import useResponsive from "@/composables/useResponsive";
 const { isLarge, isMedium, isSmall, screenType } = useResponsive();
 import gsap from "gsap";
-import { fetchGallery } from "@/api/sheetApi";
+import { fetchGallery, fetchGalleryMessage } from "@/api/sheetApi";
 import ScrollTrigger from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const photoData = ref([]);
+const messageData = ref([]);
 const horizontalScrollConfig = {
   sm: { start: "top top", additionX: 15 },
   md: { start: "top top", additionX: 60 },
@@ -17,11 +18,20 @@ const currentScrollConfig = computed(
   () => horizontalScrollConfig[screenType] ?? horizontalScrollConfig.lg
 );
 
+const formatText = function (message) {
+  if (message) {
+    return message.replace(/\n/g, "<br>");
+  }
+  return ""
+}
+
 const scrollAnimation = ref(null);
 onMounted(async () => {
-  const data = await fetchGallery();
-  photoData.value = data;
-
+  const response = await fetchGallery();
+  const messsageResponse = await fetchGalleryMessage();
+  photoData.value = response;
+  messageData.value = messsageResponse;
+  
   scrollAnimation.value = gsap.to(".scroll-box", {
     x() {
       const container = document.querySelector("#media-gallery");
@@ -78,18 +88,18 @@ const clickUrlFn = (url) => {
   >
     <div class="scroll-container-header lt-lg">
       <div class="heading">
-        <span class="heading__en font-serif">Crystal Curating</span>
-        <h2 class="heading__title font-serif">走近 流域之美</h2>
-        <h3 class="heading__subtitle font-serif">流域的共生藝術夢境</h3>
+        <span class="heading__en font-serif h-[22.4px]">{{ messageData[1]?.message }}</span>
+        <h2 class="heading__title font-serif md:h-[60.8px] h-[48px]">{{ messageData[0]?.message }}</h2>
+        <h3 class="heading__subtitle font-serif h-[38px]">{{ messageData[2]?.message }}</h3>
       </div>
     </div>
     <div class="scroll-box">
       <div class="scroll-box__header gt-md invisible">
         <div>
           <div class="heading">
-            <span class="heading__en">Crystal Curating</span>
+            <span class="heading__en">Crystal Curating2</span>
             <div class="heading__title">走近 流域之美2</div>
-            <div class="heading__subtitle">流域的共生藝術夢境</div>
+            <div class="heading__subtitle">流域的共生藝術夢境2</div>
           </div>
         </div>
       </div>
@@ -106,13 +116,10 @@ const clickUrlFn = (url) => {
           @click="clickUrlFn(photoData[0]?.clickUrl)"
         />
         <div class="collage-1">
-          <p class="text-en font-serif">Landscape</p>
+          <p class="text-en font-serif md:h-[28.8px] h-[25.6px]">{{ messageData[3]?.message }}</p>
           <div class="grid-container">
             <div class="left">
-              <p class="text-ch font-serif">
-                河流悄緩滋養大地，<br />
-                孕育台灣的文明軌跡
-              </p>
+              <div class="text-ch font-serif md:h-[60.8px] h-[57px]" v-html="formatText(messageData[4]?.message)"></div>
               <img
                 :src="photoData[1]?.imageUrl"
                 :alt="photoData[1]?.description"
@@ -147,10 +154,7 @@ const clickUrlFn = (url) => {
                 ]"
                 @click="clickUrlFn(photoData[3]?.clickUrl)"
               />
-              <p class="text-ch font-serif">
-                水系公民行動<br />
-                也因此伴河而生
-              </p>
+              <div class="text-ch font-serif" v-html="formatText(messageData[5]?.message)"></div>
             </div>
           </div>
         </div>
@@ -167,7 +171,8 @@ const clickUrlFn = (url) => {
         <div class="collage-2">
           <div class="grid-container">
             <div class="left">
-              <p class="text-en font-serif">Chasing Living</p>
+              <!-- <p class="text-en font-serif">Chasing Living</p> -->
+              <p class="text-en font-serif md:h-[28.8px] h-[25.6px]">{{ messageData[6]?.message }}</p>
               <img
                 :src="photoData[5]?.imageUrl"
                 :alt="photoData[5]?.description"
@@ -179,10 +184,7 @@ const clickUrlFn = (url) => {
                 ]"
                 @click="clickUrlFn(photoData[5]?.clickUrl)"
               />
-              <p class="text-ch font-serif">
-                晨曦與夕陽輪替，<br />
-                照看流域內永恆怒放的生命
-              </p>
+              <div class="text-ch font-serif" v-html="formatText(messageData[8]?.message)"></div>
             </div>
             <div class="right-top">
               <img
@@ -195,10 +197,7 @@ const clickUrlFn = (url) => {
                 ]"
                 @click="clickUrlFn(photoData[6]?.clickUrl)"
               />
-              <p class="text-ch font-serif">
-                這是養育台灣人的母親河，<br />
-                滿載文明底蘊，沉浸如藝術夢境
-              </p>
+              <div class="text-ch font-serif" v-html="formatText(messageData[7]?.message)"></div>
             </div>
             <div class="right-bottom flex">
               <img
