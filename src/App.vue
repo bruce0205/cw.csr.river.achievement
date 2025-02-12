@@ -31,6 +31,7 @@ onMounted(async () => {
   <!-- 1) hero -->
   <Hero></Hero>
   <div class="body">
+    <img class="md:mt-20 mt-10 lg:w-[380px] md:w-[320px] w-[240px] aspect-[531/174]" src="@/assets/newtaipei-logo.png" />
     <!-- 2) 前言 -->
     <Introduction></Introduction>
 
