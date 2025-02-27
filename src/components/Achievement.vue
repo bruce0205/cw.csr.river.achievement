@@ -1,8 +1,11 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUpdated, onBeforeUnmount } from "vue";
 import { fetchAchievement } from "@/api/sheetApi";
 import useResponsive from "@/composables/useResponsive";
 const { isLarge } = useResponsive();
+
+const targetDiv = ref(null);
+const isPause = ref(true); // Start in a stopped state
 
 const achievementData = ref([
   ...Array(5).fill({
@@ -10,9 +13,45 @@ const achievementData = ref([
   }),
 ]);
 
+const triggerHalfOutEvent = () => {
+  console.log("out");
+  isPause.value = true;
+};
+
+const triggerFullInEvent = () => {
+  console.log("in");
+  isPause.value = false;
+};
+
 onMounted(async () => {
   const data = await fetchAchievement();
   achievementData.value = data;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.8) {
+          triggerHalfOutEvent();
+        }
+        if (entry.intersectionRatio >= 0.9) {
+          triggerFullInEvent();
+        }
+      });
+    },
+    {
+      threshold: [0.8, 0.9],
+    }
+  );
+
+  if (targetDiv.value) {
+    observer.observe(targetDiv.value);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (targetDiv.value) {
+    observer.unobserve(targetDiv.value);
+  }
 });
 </script>
 
@@ -22,7 +61,7 @@ onMounted(async () => {
     v-track-viewport="'achievement-viewed'"
     class="lg:pt-20 md:pt-[60px] pt-10 lg:pb-[120px] md:pb-[100px] pb-20 lg:w-[1210px] md:w-[768px] w-full"
   >
-    <div class="flex flex-row gap-x-[60px] relative">
+    <div ref="targetDiv" class="flex flex-row gap-x-[60px] relative">
       <div
         v-if="isLarge"
         class="absolute left-0 h-full w-40 z-20 bg-gradient-to-r from-[#F8F9F9]"
@@ -32,6 +71,9 @@ onMounted(async () => {
         class="absolute right-0 h-full w-40 z-20 bg-gradient-to-l from-[#F8F9F9]"
       ></div>
       <Vue3Marquee
+        :pause="isPause"
+        :delay="1"
+        :duration="40"
         :pause-on-hover="true"
         @on-pause="playState = 'paused'"
         @on-resume="playState = 'playing'"
@@ -70,4 +112,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss"></style>
