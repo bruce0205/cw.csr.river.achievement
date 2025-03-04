@@ -14,12 +14,10 @@ const achievementData = ref([
 ]);
 
 const triggerHalfOutEvent = () => {
-  console.log("out");
   isPause.value = true;
 };
 
 const triggerFullInEvent = () => {
-  console.log("in");
   isPause.value = false;
 };
 
@@ -64,29 +62,30 @@ onBeforeUnmount(() => {
     <div ref="targetDiv" class="flex flex-row gap-x-[60px] relative">
       <div
         v-if="isLarge"
-        class="absolute left-0 h-full w-40 z-20 bg-gradient-to-r from-[#F8F9F9]"
+        class="absolute left-0 h-full w-10 z-20 bg-gradient-to-r from-[#F8F9F9]"
       ></div>
       <div
         v-if="isLarge"
-        class="absolute right-0 h-full w-40 z-20 bg-gradient-to-l from-[#F8F9F9]"
+        class="absolute right-0 h-full w-10 z-20 bg-gradient-to-l from-[#F8F9F9]"
       ></div>
       <Vue3Marquee
         :pause="isPause"
         :delay="1"
-        :duration="40"
+        :duration="48"
         :pause-on-hover="true"
         @on-pause="playState = 'paused'"
         @on-resume="playState = 'playing'"
       >
+        <div class="z-10 w-[60px] relative"></div>
         <div
           v-for="(data, index) in achievementData"
           :key="index"
           class="z-10 w-[300px] relative"
         >
           <div
-            class="absolute border-b-2 border-solid border-[#E9EBED] w-[140px] top-8 -right-12"
+            class="absolute border-b-2 border-solid border-[#E9EBED] w-[140px] top-8 -right-[76px]"
           ></div>
-          <div class="w-[240px] flex flex-col items-center">
+          <div class="w-[260px] pl-5 flex flex-col items-center">
             <div class="w-[70px] h-[70px] rounded-full bg-[#BDE1EFE1] relative">
               <div
                 class="absolute bottom-2 left-5 font-serif text-[26px] text-[#2F3941] tracking-[.06em] font-semibold"
@@ -106,6 +105,7 @@ onBeforeUnmount(() => {
             </div>
           </div>
         </div>
+        <div class="z-10 w-[60px] relative"></div>
       </Vue3Marquee>
     </div>
     <img class="lg:mt-[35px] md:mt-[30px]" src="@/assets/achievement.svg" />
