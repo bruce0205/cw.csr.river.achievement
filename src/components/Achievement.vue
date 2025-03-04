@@ -105,7 +105,6 @@ onBeforeUnmount(() => {
             </div>
           </div>
         </div>
-        <div class="z-10 w-[60px] relative"></div>
       </Vue3Marquee>
     </div>
     <img class="lg:mt-[35px] md:mt-[30px]" src="@/assets/achievement.svg" />
